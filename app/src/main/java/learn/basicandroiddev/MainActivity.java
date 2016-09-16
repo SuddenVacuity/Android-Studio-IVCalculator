@@ -94,17 +94,16 @@ public class MainActivity extends AppCompatActivity
         natureOutput.setText(StatData.NATURE_OUTPUT_DEFAULT);
 
         // auto add pokemon for testing
-        {
-            POKEMON.level = 72;
-            POKEMON.species = 384;
-            POKEMON.nature = StatData.NATURE_ADAMANT;
-            int[] statsss = {254,266,156,208,153,164};
-            for(int i = 0; i < StatData.NUMBER_STATS; i++)
-            {
-                POKEMON.stats[i] = statsss[i];
-
-            }
-        }
+        //{
+        //    POKEMON.level = 72;
+        //    POKEMON.species = 384;
+        //    POKEMON.nature = StatData.NATURE_ADAMANT;
+        //    int[] statsss = {254,266,156,208,153,164};
+        //    for(int i = 0; i < StatData.NUMBER_STATS; i++)
+        //    {
+        //        POKEMON.stats[i] = statsss[i];
+        //    }
+        //}
         if(saveManager.loadPokeFromFile("_autoSave.pkm", POKEMON))
         {
             initialCalculation = false;
