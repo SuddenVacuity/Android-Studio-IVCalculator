@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="learn.basicandroiddev.MainActivity">
+
+
+    <item android:id="@+id/action_settings"
+          android:title="Settings"
+          android:orderInCategory="1"
+          app:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/action_settings_placeholder" android:title="Placeholder"></item>
+        </menu>
+    </item>
+
+    <item android:id="@+id/action_exit_app"
+          android:title="Exit  "
+          android:orderInCategory="2"
+          app:showAsAction="ifRoom|withText"
+        />
+
+</menu>

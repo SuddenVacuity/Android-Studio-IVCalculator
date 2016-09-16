@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="learn.basicandroiddev.MainActivity">
+
+
+    <item android:id="@+id/settings_hand_mode"
+          android:title="Left-Handed Mode"
+          android:orderInCategory="100"
+          app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/settings_auto_ev"
+          android:title="Auto EVs On"
+          android:orderInCategory="100"
+          app:showAsAction="ifRoom|withText"/>
+
+</menu>

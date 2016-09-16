@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="35dp"
+              android:orientation="horizontal"
+              android:background="#7f7f7f">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_gravity="center_vertical"
+        android:textSize="20sp"
+        android:id="@+id/row_nature_list"
+        android:hapticFeedbackEnabled="true"
+        android:gravity="center_vertical"
+        android:background="#858585"/>
+    <ImageView
+        android:id="@+id/row_nature_positive"
+        android:hapticFeedbackEnabled="true"
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:background="#858585"/>
+    <ImageView
+        android:id="@+id/row_nature_negative"
+        android:hapticFeedbackEnabled="true"
+        android:layout_width="75dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:background="#858585"/>
+
+</LinearLayout>

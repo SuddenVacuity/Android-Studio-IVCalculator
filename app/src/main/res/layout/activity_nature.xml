@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This is the Pokemon nature select screen for the IV calculator
+    There are 3 rows in its main layout
+        row 1 is screen description
+        row 2 is the currently selected nature
+        row 3 is nature select scrolling list
+        row 4 is cancel/confirm
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:background="#7f7f7f"
+              android:focusableInTouchMode="false">
+
+    <!-- row 1 - screen description -->
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Select the Pokemon's Nature."
+        android:textSize="20sp"
+        android:id="@+id/nature_description"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#858585"/>
+
+    <!-- row 2 - current selected nature -->
+    <LinearLayout
+        android:layout_width="290dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#454545">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textSize="22sp"
+            android:id="@+id/nature_selected_name"
+            android:gravity="center_vertical"
+            android:background="#858585"
+            android:text=""/>
+        <ImageView
+            android:id="@+id/nature_selected_positive"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="#757575"/>
+        <ImageView
+            android:id="@+id/nature_selected_negative"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:background="#757575"/>
+    </LinearLayout> <!-- end row 2 - current selected nature -->
+
+    <!-- row 3 - content scrollview -->
+    <LinearLayout
+        android:layout_width="270dp"
+        android:layout_height="376dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="#00005f"
+        android:layout_gravity="center"
+        android:id="@+id/scrollView">
+
+        <!-- content layout -->
+        <ListView
+            android:layout_width="250dp"
+            android:layout_height="356dp"
+            android:id="@+id/nature_listview"
+            android:background="#858585"/>
+
+    </LinearLayout> <!--  end row 3 - end content scrollview -->
+
+    <!-- row 4 - confirm/cancel -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#454545">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:text="cancel"
+            android:onClick="onNatureCancel"
+            android:textSize="20sp"
+            android:id="@+id/nature_cancel"
+            android:hapticFeedbackEnabled="true"
+            android:gravity="center"
+            android:background="#858585"/>
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
+            android:text="confirm"
+            android:onClick="onNatureConfirm"
+            android:textSize="20sp"
+            android:id="@+id/nature_confirm"
+            android:hapticFeedbackEnabled="true"
+            android:gravity="center"
+            android:background="#858585"/>
+    </LinearLayout> <!-- end row 4 - confirm/cancel -->
+
+</LinearLayout>
