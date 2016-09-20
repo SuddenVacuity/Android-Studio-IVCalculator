@@ -23,6 +23,41 @@ public class SaveManager
     private static int entryLengthBytes = entryLength * intLength;
     private static int headerLengthBytes = headerLength * intLength;
 
+    // entry layout enum
+    public static final int SAVE_LEVEL = 0;
+    public static final int SAVE_SPECIES = SAVE_LEVEL + 1;
+    public static final int SAVE_NATURE = SAVE_SPECIES + 1;
+    public static final int SAVE_STAT_HP = SAVE_NATURE + 1;
+    public static final int SAVE_STAT_ATK = SAVE_STAT_HP + 1;
+    public static final int SAVE_STAT_DEF = SAVE_STAT_ATK + 1;
+    public static final int SAVE_STAT_SPATK = SAVE_STAT_DEF + 1;
+    public static final int SAVE_STAT_SPDEF = SAVE_STAT_SPATK + 1;
+    public static final int SAVE_STAT_SPEED = SAVE_STAT_SPDEF + 1;
+    public static final int SAVE_EV_HP = SAVE_STAT_SPEED + 1;
+    public static final int SAVE_EV_ATK = SAVE_EV_HP + 1;
+    public static final int SAVE_EV_DEF = SAVE_EV_ATK + 1;
+    public static final int SAVE_EV_SPATK = SAVE_EV_DEF + 1;
+    public static final int SAVE_EV_SPDEF = SAVE_EV_SPATK + 1;
+    public static final int SAVE_EV_SPEED = SAVE_EV_SPDEF + 1;
+    public static final int SAVE_IV_HP = SAVE_EV_SPEED + 1;
+    public static final int SAVE_IV_ATK = SAVE_IV_HP + 1;
+    public static final int SAVE_IV_DEF = SAVE_IV_ATK + 1;
+    public static final int SAVE_IV_SPATK = SAVE_IV_DEF + 1;
+    public static final int SAVE_IV_SPDEF = SAVE_IV_SPATK + 1;
+    public static final int SAVE_IV_SPEED = SAVE_IV_SPDEF + 1;
+    public static final int SAVE_IVMIN_HP = SAVE_IV_SPEED + 1;
+    public static final int SAVE_IVMIN_ATK = SAVE_IVMIN_HP + 1;
+    public static final int SAVE_IVMIN_DEF = SAVE_IVMIN_ATK + 1;
+    public static final int SAVE_IVMIN_SPATK = SAVE_IVMIN_DEF + 1;
+    public static final int SAVE_IVMIN_SPDEF = SAVE_IVMIN_SPATK + 1;
+    public static final int SAVE_IVMIN_SPEED = SAVE_IVMIN_SPDEF + 1;
+    public static final int SAVE_IVMAX_HP = SAVE_IVMIN_SPEED + 1;
+    public static final int SAVE_IVMAX_ATK = SAVE_IVMAX_HP + 1;
+    public static final int SAVE_IVMAX_DEF = SAVE_IVMAX_ATK + 1;
+    public static final int SAVE_IVMAX_SPATK = SAVE_IVMAX_DEF + 1;
+    public static final int SAVE_IVMAX_SPDEF = SAVE_IVMAX_SPATK + 1;
+    public static final int SAVE_IVMAX_SPEED = SAVE_IVMAX_SPDEF + 1;
+
     public int getNumEntries()
     {
         return numEntries;
@@ -266,5 +301,29 @@ public class SaveManager
         entryId = position;
 
         return true;
+    }
+
+
+    public int getIntFromMemory(int entryPosition, int entryValue)
+    {
+        int output = 0;
+        // entry# >> level >> species >> nature >> stats >> evs >> ivs >> ivsmin >> ivsmax
+        byte[] bytes = new byte[intLength];
+
+        final int pos = headerLengthBytes + entryPosition * entryLengthBytes + entryValue * intLength;
+
+        System.arraycopy(saveData, pos, bytes, 0, intLength);
+
+        // copy data to output
+        ByteBuffer bb = ByteBuffer.allocate(intLength);
+        bb.order(ByteOrder.BIG_ENDIAN);
+        bb.put(bytes[0]);
+        bb.put(bytes[1]);
+        bb.put(bytes[2]);
+        bb.put(bytes[3]);
+        output = bb.getInt(0);
+        //System.out.println("getIntFromMemory() output = " + output);
+
+        return output;
     }
 }

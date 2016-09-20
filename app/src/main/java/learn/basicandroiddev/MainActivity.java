@@ -8,8 +8,10 @@ import android.util.TypedValue;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     public static boolean leftHandedMode = true;
 
     public static boolean initialCalculation = true;
+    public static boolean allowChangeStats = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -112,16 +115,59 @@ public class MainActivity extends AppCompatActivity
             if(VERSION != saveManager.getSaveVersion())
             {
                 VersionManager.handleVersion(VERSION, saveManager.getSaveVersion());
+            }
+
+            System.out.println("saveManager.getNumEntries = " + saveManager.getNumEntries());
+            saveManager.loadPokeFromMemory(POKEMON, saveManager.getNumEntries());
+
+            final int currentPos = saveManager.getCurrentPosition();
+
+            if(currentPos == 0)
+            {
                 initialCalculation = true;
+
+                allowChangeStats = true;
             }
             else
             {
-                System.out.println("saveManager.getNumEntries = " + saveManager.getNumEntries());
-                saveManager.loadPokeFromMemory(POKEMON, saveManager.getNumEntries());
                 initialCalculation = false;
+                allowChangeStats = ((currentPos == 1) && !isPrevEntrySpeciesSame());
             }
+
             updateAll();
         }
+
+        //  set up listeners
+        TextView updateButton = (TextView) findViewById(R.id.main_update_button_image);
+
+
+        updateButton.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent event)
+            {
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    view.setTag(true);
+                }
+                else if(view.isPressed() && (boolean) view.getTag())
+                {
+                    long eventDuration = event.getEventTime() - event.getDownTime();
+                    if(eventDuration > ViewConfiguration.getLongPressTimeout())
+                    {
+                        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                        view.setTag(false);
+                        return evolve(view);
+                    }
+                    else if(event.getAction() == MotionEvent.ACTION_UP)
+                    {
+                        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                        return onPushLevel(view);
+                    }
+                }
+                return false;
+            }
+        });
+
     }
 
 
@@ -416,7 +462,7 @@ public class MainActivity extends AppCompatActivity
                         startActivityForResult(setStatInputIntent, REQUEST_NUMBER_STAT_ATK);
                     }
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
 
                 } break;
@@ -443,7 +489,7 @@ public class MainActivity extends AppCompatActivity
                         startActivityForResult(setStatInputIntent, REQUEST_NUMBER_STAT_DEF);
                     }
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
                 } break;
                 case REQUEST_NUMBER_STAT_DEF:
@@ -469,7 +515,7 @@ public class MainActivity extends AppCompatActivity
                         startActivityForResult(setStatInputIntent, REQUEST_NUMBER_STAT_SPATK);
                     }
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
                 } break;
                 case REQUEST_NUMBER_STAT_SPATK:
@@ -495,7 +541,7 @@ public class MainActivity extends AppCompatActivity
                         startActivityForResult(setStatInputIntent, REQUEST_NUMBER_STAT_SPDEF);
                     }
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
                 } break;
                 case REQUEST_NUMBER_STAT_SPDEF:
@@ -521,7 +567,7 @@ public class MainActivity extends AppCompatActivity
                         startActivityForResult(setStatInputIntent, REQUEST_NUMBER_STAT_SPEED);
                     }
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
                 } break;
                 case REQUEST_NUMBER_STAT_SPEED:
@@ -534,7 +580,7 @@ public class MainActivity extends AppCompatActivity
 
                     outputTV.setText(valueSentBack);
 
-                    if(!initialCalculation)
+                    if(!allowChangeStats)
                         outputTV.setClickable(false);
                 } break;
             }
@@ -637,8 +683,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent setEvInputIntent = new Intent(this, NumberActivity.class);
 
-        if(initialCalculation)
-            setEvInputIntent.putExtra("chainInput", true);
+        //if(initialCalculation)
+        //    setEvInputIntent.putExtra("chainInput", true);
 
         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
         setEvInputIntent.putExtra("allowNegative", true);
@@ -653,8 +699,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent setEvInputIntent = new Intent(this, NumberActivity.class);
 
-        if(initialCalculation)
-            setEvInputIntent.putExtra("chainInput", true);
+        //if(initialCalculation)
+        //    setEvInputIntent.putExtra("chainInput", true);
 
         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
         setEvInputIntent.putExtra("allowNegative", true);
@@ -669,8 +715,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent setEvInputIntent = new Intent(this, NumberActivity.class);
 
-        if(initialCalculation)
-            setEvInputIntent.putExtra("chainInput", true);
+        //if(initialCalculation)
+        //    setEvInputIntent.putExtra("chainInput", true);
 
         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
         setEvInputIntent.putExtra("allowNegative", true);
@@ -685,8 +731,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent setEvInputIntent = new Intent(this, NumberActivity.class);
 
-        if(initialCalculation)
-            setEvInputIntent.putExtra("chainInput", true);
+        //if(initialCalculation)
+        //    setEvInputIntent.putExtra("chainInput", true);
 
         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
         setEvInputIntent.putExtra("allowNegative", true);
@@ -701,8 +747,8 @@ public class MainActivity extends AppCompatActivity
 
         Intent setEvInputIntent = new Intent(this, NumberActivity.class);
 
-        if(initialCalculation)
-            setEvInputIntent.putExtra("chainInput", true);
+        //if(initialCalculation)
+        //    setEvInputIntent.putExtra("chainInput", true);
 
         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
         setEvInputIntent.putExtra("allowNegative", true);
@@ -729,7 +775,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalHp(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -746,7 +792,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalAtk(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -763,7 +809,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalDef(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -780,7 +826,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalSpAtk(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -797,7 +843,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalSpDef(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -814,7 +860,7 @@ public class MainActivity extends AppCompatActivity
     // open number activity and get a number
     public void onSetStatTotalSpeed(View view)
     {
-        if(!initialCalculation)
+        if(!allowChangeStats)
             return;
 
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
@@ -1054,7 +1100,7 @@ public class MainActivity extends AppCompatActivity
         ivText.setText(String.valueOf(ADDED_STATS[StatData.STAT_SPEED]));
     }
 
-    public void onPushLevel(View view)
+    public boolean onPushLevel(View view)
     {
         boolean cancelPush = false;
 
@@ -1091,12 +1137,14 @@ public class MainActivity extends AppCompatActivity
         if(cancelPush)
         {
             //Toast.makeText(this, "Choose Level, Species, Nature, and set Stats.", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         if(!initialCalculation)
             if(POKEMON.level < 100)
-                POKEMON.level += 1;
+                if(saveManager.getCurrentPosition() > 0) // stay inside saveData limits
+                    if(isCurrentEntrySpeciesSame()) //
+                        POKEMON.level += 1;
 
         for(int i = StatData.STAT_HP; i < StatData.NUMBER_STATS; i++)
         {
@@ -1117,6 +1165,7 @@ public class MainActivity extends AppCompatActivity
         calculator.calculateIvs(POKEMON);
 
         initialCalculation = false;
+        allowChangeStats = false;
 
         // reset and check for errors
         for(int i = 0; i < StatData.NUMBER_STATS; i++)
@@ -1140,6 +1189,7 @@ public class MainActivity extends AppCompatActivity
         }
         saveManager.autoSaveFile(POKEMON);
         updateAll();
+        return true;
     }
 
 
@@ -1158,7 +1208,19 @@ public class MainActivity extends AppCompatActivity
 
         // check if to allow direct stat input
         if(pos == 0)
+        {
             initialCalculation = true;
+            allowChangeStats = true;
+        }
+
+        // check if poke before is the same species
+        if(pos > 0)
+        {
+            // allow changes if previous species is different
+            allowChangeStats = !isPrevEntrySpeciesSame();
+        }
+        else
+            allowChangeStats = true;
 
         updateAll();
     }
@@ -1173,9 +1235,16 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-
         final int pos = saveManager.getCurrentPosition() + 1;
         saveManager.loadPokeFromMemory(POKEMON, pos);
+
+        if(pos == 1)
+        {
+            initialCalculation = false;
+            allowChangeStats = false;
+        }
+        else // allow changes if previous species is different
+        allowChangeStats = !isPrevEntrySpeciesSame();
 
         updateAll();
     }
@@ -1194,7 +1263,7 @@ public class MainActivity extends AppCompatActivity
         TextView speciesTV = (TextView) findViewById(R.id.main_species_text);
         TextView natureTV = (TextView) findViewById(R.id.main_nature_text);
 
-        if(saveManager.getCurrentPosition() != 0)
+        if(saveManager.getCurrentPosition() > 0)
         {
             levelTV.setText(String.valueOf(POKEMON.level));
             speciesTV.setText(PokeData.Name[POKEMON.species]);
@@ -1314,7 +1383,28 @@ public class MainActivity extends AppCompatActivity
         TextView displayTotalSpDef = (TextView) findViewById(R.id.main_spd_total_text);
         TextView displayTotalSpeed = (TextView) findViewById(R.id.main_spe_total_text);
 
-        if(saveManager.getCurrentPosition() != 0)
+        if(allowChangeStats)
+        {
+            String dash = "---";
+
+            if(initialCalculation)
+            {
+                displayTotalHp.setText(dash);
+                displayTotalAtk.setText(dash);
+                displayTotalDef.setText(dash);
+                displayTotalSpAtk.setText(dash);
+                displayTotalSpDef.setText(dash);
+                displayTotalSpeed.setText(dash);
+            }
+
+            displayTotalHp.setClickable(true);
+            displayTotalAtk.setClickable(true);
+            displayTotalDef.setClickable(true);
+            displayTotalSpAtk.setClickable(true);
+            displayTotalSpDef.setClickable(true);
+            displayTotalSpeed.setClickable(true);
+        }
+        else
         {
             displayTotalHp.setText(String.valueOf(POKEMON.stats[StatData.STAT_HP]));
             displayTotalAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_ATK]));
@@ -1322,17 +1412,6 @@ public class MainActivity extends AppCompatActivity
             displayTotalSpAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPATK]));
             displayTotalSpDef.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPDEF]));
             displayTotalSpeed.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPEED]));
-        }
-        else
-        {
-            String dash = "---";
-
-            displayTotalHp.setText(dash);
-            displayTotalAtk.setText(dash);
-            displayTotalDef.setText(dash);
-            displayTotalSpAtk.setText(dash);
-            displayTotalSpDef.setText(dash);
-            displayTotalSpeed.setText(dash);
         }
     }
 
@@ -1472,7 +1551,87 @@ public class MainActivity extends AppCompatActivity
         displayTotalSpeed.setClickable(true);
 
         initialCalculation = true;
+        allowChangeStats = true;
     }
 
+    boolean evolve(View view)
+    {
+        // get evolution set
+        int[] evolutions = new int[8];
+
+        // check if eevee
+        if(POKEMON.species == 133)
+        {
+            evolutions[0] = PokeData.eevolutions[0];
+            evolutions[1] = PokeData.eevolutions[1];
+            evolutions[2] = PokeData.eevolutions[2];
+            evolutions[3] = PokeData.eevolutions[3];
+            evolutions[4] = PokeData.eevolutions[4];
+            evolutions[5] = PokeData.eevolutions[5];
+            evolutions[6] = PokeData.eevolutions[6];
+            evolutions[7] = PokeData.eevolutions[7];
+        }
+        else
+        {
+            evolutions[0] = PokeData.evolutions[POKEMON.species][0];
+            evolutions[1] = PokeData.evolutions[POKEMON.species][1];
+            evolutions[2] = PokeData.evolutions[POKEMON.species][2];
+        }
+
+        // no evolution
+        if(evolutions[0] == 0)
+            return false;
+
+        // one evolution
+        if(evolutions[1] == 0)
+        {
+            POKEMON.species = PokeData.evolutions[POKEMON.species][0];
+
+            POKEMON.stats[StatData.STAT_HP] = 0;
+            POKEMON.stats[StatData.STAT_ATK] = 0;
+            POKEMON.stats[StatData.STAT_DEF] = 0;
+            POKEMON.stats[StatData.STAT_SPATK] = 0;
+            POKEMON.stats[StatData.STAT_SPDEF] = 0;
+            POKEMON.stats[StatData.STAT_SPEED] = 0;
+
+            allowChangeStats = true;
+
+        }
+
+
+        TextView displayTotalHp = (TextView) findViewById(R.id.main_hp_total_text);
+        TextView displayTotalAtk = (TextView) findViewById(R.id.main_atk_total_text);
+        TextView displayTotalDef = (TextView) findViewById(R.id.main_def_total_text);
+        TextView displayTotalSpAtk = (TextView) findViewById(R.id.main_spa_total_text);
+        TextView displayTotalSpDef = (TextView) findViewById(R.id.main_spd_total_text);
+        TextView displayTotalSpeed = (TextView) findViewById(R.id.main_spe_total_text);
+
+        String dash = "---";
+        displayTotalHp.setText(dash);
+        displayTotalAtk.setText(dash);
+        displayTotalDef.setText(dash);
+        displayTotalSpAtk.setText(dash);
+        displayTotalSpDef.setText(dash);
+        displayTotalSpeed.setText(dash);
+
+        updateAll();
+        return true;
+    }
+
+    public boolean isPrevEntrySpeciesSame()
+    {
+        // check if poke before is the same species
+        final int prevSpecies = saveManager.getIntFromMemory(saveManager.getCurrentPosition() - 1, SaveManager.SAVE_SPECIES);
+        System.out.println("isPrevEntrySpeciesSame() " + POKEMON.species + " = " + prevSpecies);
+
+        return (POKEMON.species == prevSpecies);
+    }
+    public boolean isCurrentEntrySpeciesSame()
+    {
+        // check if poke before is the same species
+        final int prevSpecies = saveManager.getIntFromMemory(saveManager.getCurrentPosition(), SaveManager.SAVE_SPECIES);
+
+        return (POKEMON.species == prevSpecies);
+    }
 
 }
