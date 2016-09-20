@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
+    public static final int VERSION = VersionManager.v0_0_1;
+
     // enumerate menu options
     public static final int MENU_NEW = 1;
     public static final int MENU_SETTINGS = 2;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity
     public static final int MAX_EV_VALUE = 255;
 
     public static PokeObject POKEMON = new PokeObject();
-    public static SaveManager saveManager = new SaveManager();
+    public static SaveManager saveManager = new SaveManager(VERSION);
 
     // input variables
     public int[] ADDED_STATS = {0,0,0,0,0,0};
@@ -104,9 +106,20 @@ public class MainActivity extends AppCompatActivity
         //        POKEMON.stats[i] = statsss[i];
         //    }
         //}
-        if(saveManager.loadPokeFromFile("_autoSave.pkm", POKEMON))
+
+        if(saveManager.loadFileToMemory("_autoSave.pkm"))
         {
-            initialCalculation = false;
+            if(VERSION != saveManager.getSaveVersion())
+            {
+                VersionManager.handleVersion(VERSION, saveManager.getSaveVersion());
+                initialCalculation = true;
+            }
+            else
+            {
+                System.out.println("saveManager.getNumEntries = " + saveManager.getNumEntries());
+                saveManager.loadPokeFromMemory(POKEMON, saveManager.getNumEntries());
+                initialCalculation = false;
+            }
             updateAll();
         }
     }
@@ -144,6 +157,7 @@ public class MainActivity extends AppCompatActivity
             case MENU_NEW:
             {
                 resetAll();
+                saveManager.reset();
                 FileEditor.deleteFile("saves", "_autoSave.pkm");
                 return true;
             }
@@ -256,7 +270,7 @@ public class MainActivity extends AppCompatActivity
 
                         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
                         setEvInputIntent.putExtra("allowNegative", true);
-                        setEvInputIntent.putExtra("chainInput", true);
+                        //setEvInputIntent.putExtra("chainInput", true);
                         setEvInputIntent.putExtra("numberPurpose", "Set Attack Effort Value");
 
                         startActivityForResult(setEvInputIntent, REQUEST_NUMBER_EV_ATK);
@@ -281,7 +295,7 @@ public class MainActivity extends AppCompatActivity
 
                         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
                         setEvInputIntent.putExtra("allowNegative", true);
-                        setEvInputIntent.putExtra("chainInput", true);
+                        //setEvInputIntent.putExtra("chainInput", true);
                         setEvInputIntent.putExtra("numberPurpose", "Set Defense Effort Value");
 
                         startActivityForResult(setEvInputIntent, REQUEST_NUMBER_EV_DEF);
@@ -307,7 +321,7 @@ public class MainActivity extends AppCompatActivity
 
                         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
                         setEvInputIntent.putExtra("allowNegative", true);
-                        setEvInputIntent.putExtra("chainInput", true);
+                        //setEvInputIntent.putExtra("chainInput", true);
                         setEvInputIntent.putExtra("numberPurpose", "Set Sp.Attack Effort Value");
 
                         startActivityForResult(setEvInputIntent, REQUEST_NUMBER_EV_SPATK);
@@ -333,7 +347,7 @@ public class MainActivity extends AppCompatActivity
 
                         setEvInputIntent.putExtra("callNumber", MAX_EV_VALUE);
                         setEvInputIntent.putExtra("allowNegative", true);
-                        setEvInputIntent.putExtra("chainInput", true);
+                        //setEvInputIntent.putExtra("chainInput", true);
                         setEvInputIntent.putExtra("numberPurpose", "Set Sp.Defense Effort Value");
 
                         startActivityForResult(setEvInputIntent, REQUEST_NUMBER_EV_SPDEF);
@@ -1044,6 +1058,8 @@ public class MainActivity extends AppCompatActivity
     {
         boolean cancelPush = false;
 
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
         if(POKEMON.level < 1)
         {
             Toast.makeText(this, "Pokemon Level is not set", Toast.LENGTH_SHORT).show();
@@ -1077,8 +1093,6 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(this, "Choose Level, Species, Nature, and set Stats.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
         if(!initialCalculation)
             if(POKEMON.level < 100)
@@ -1131,12 +1145,39 @@ public class MainActivity extends AppCompatActivity
 
     public void onUndo(View view)
     {
-        Toast.makeText(this, "does nothing", Toast.LENGTH_SHORT).show();
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+        if(saveManager.getCurrentPosition() == 0)
+        {
+            Toast.makeText(this, "Cannot Undo", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final int pos = saveManager.getCurrentPosition() - 1;
+        saveManager.loadPokeFromMemory(POKEMON, pos);
+
+        // check if to allow direct stat input
+        if(pos == 0)
+            initialCalculation = true;
+
+        updateAll();
     }
 
     public void onRedo(View view)
     {
-        Toast.makeText(this, "does nothing", Toast.LENGTH_SHORT).show();
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+        if(saveManager.getCurrentPosition() == saveManager.getNumEntries())
+        {
+            Toast.makeText(this, "Cannot Redo", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        final int pos = saveManager.getCurrentPosition() + 1;
+        saveManager.loadPokeFromMemory(POKEMON, pos);
+
+        updateAll();
     }
     /*///////////////////////////////////////////////////////////////////////
      *
@@ -1153,20 +1194,18 @@ public class MainActivity extends AppCompatActivity
         TextView speciesTV = (TextView) findViewById(R.id.main_species_text);
         TextView natureTV = (TextView) findViewById(R.id.main_nature_text);
 
-        if(POKEMON.level > 0)
+        if(saveManager.getCurrentPosition() != 0)
+        {
             levelTV.setText(String.valueOf(POKEMON.level));
-        else
-            levelTV.setText("---");
-
-        if(POKEMON.species >= 0)
             speciesTV.setText(PokeData.Name[POKEMON.species]);
-        else
-            speciesTV.setText(PokeData.Name[0]);
-
-        if(POKEMON.nature < 0)
-            natureTV.setText("Select Nature");
-        else
             natureTV.setText(StatData.NatureName[POKEMON.nature]);
+        }
+        else
+        {
+            levelTV.setText("---");
+            speciesTV.setText(PokeData.Name[0]);
+            natureTV.setText("Select Nature");
+        }
     }
 
     public void updateEvInput()
@@ -1242,7 +1281,7 @@ public class MainActivity extends AppCompatActivity
         for(int i = 0; i < 6; i++)
         {
             // check if min/max are set
-            if (POKEMON.IVsMin[i] >= 0)
+            if (saveManager.getCurrentPosition() != 0)
             {
                 // check if precise iv is set
                 if (POKEMON.IVs[i] != -3)
@@ -1275,12 +1314,26 @@ public class MainActivity extends AppCompatActivity
         TextView displayTotalSpDef = (TextView) findViewById(R.id.main_spd_total_text);
         TextView displayTotalSpeed = (TextView) findViewById(R.id.main_spe_total_text);
 
-        displayTotalHp.setText(String.valueOf(POKEMON.stats[StatData.STAT_HP]));
-        displayTotalAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_ATK]));
-        displayTotalDef.setText(String.valueOf(POKEMON.stats[StatData.STAT_DEF]));
-        displayTotalSpAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPATK]));
-        displayTotalSpDef.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPDEF]));
-        displayTotalSpeed.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPEED]));
+        if(saveManager.getCurrentPosition() != 0)
+        {
+            displayTotalHp.setText(String.valueOf(POKEMON.stats[StatData.STAT_HP]));
+            displayTotalAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_ATK]));
+            displayTotalDef.setText(String.valueOf(POKEMON.stats[StatData.STAT_DEF]));
+            displayTotalSpAtk.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPATK]));
+            displayTotalSpDef.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPDEF]));
+            displayTotalSpeed.setText(String.valueOf(POKEMON.stats[StatData.STAT_SPEED]));
+        }
+        else
+        {
+            String dash = "---";
+
+            displayTotalHp.setText(dash);
+            displayTotalAtk.setText(dash);
+            displayTotalDef.setText(dash);
+            displayTotalSpAtk.setText(dash);
+            displayTotalSpDef.setText(dash);
+            displayTotalSpeed.setText(dash);
+        }
     }
 
     // TODO: break MainActivity.updateAll() into smaller modular functions

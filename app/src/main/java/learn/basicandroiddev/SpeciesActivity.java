@@ -165,13 +165,14 @@ public class SpeciesActivity extends Activity
                                                  }
 
                                                  // auto select if only one result
-                                                 if(resultValue[1] == 0)
+                                                 if(resultValue[0] != 0 && resultValue[1] == 0)
                                                  {
                                                      currentSpecies = resultValue[0];
                                                      isCurrentStillInResult = true;
                                                      updateResultColor(0);
                                                  }
 
+                                                 // removes selected pokemon if its no longer a search result
                                                  if(!isCurrentStillInResult)
                                                      currentSpecies = 0;
                                              } // end public void afterTextChanged(Editable s)

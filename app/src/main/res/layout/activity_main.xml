@@ -28,7 +28,7 @@
             android:layout_width="125dp"
             android:layout_height="fill_parent"
             android:onClick="onPushLevel"
-            android:text="+Level"
+            android:text="+Level  "
             android:textSize="25sp"
             android:textStyle="bold"
             android:gravity="center"
@@ -70,26 +70,32 @@
                     android:textColor="#000000"
                     android:onClick="onSetLevel"
                     android:text="---"/>
-                <ImageView
+                <TextView
                     android:id="@+id/main_undo_button_image"
                     android:hapticFeedbackEnabled="true"
                     android:layout_width="40dp"
                     android:layout_height="fill_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
                     android:onClick="onUndo"
                     android:background="#007f00"
-                    android:clickable="true"/>
-                <ImageView
+                    android:clickable="true"
+                    android:text="&lt;--"/>
+                <TextView
                     android:id="@+id/main_redo_button_image"
                     android:hapticFeedbackEnabled="true"
                     android:layout_width="40dp"
                     android:layout_height="fill_parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
                     android:onClick="onRedo"
                     android:background="#007f00"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:text="--&gt;"/>
             </LinearLayout> <!-- End Level and Config -->
 
             <TextView
@@ -245,7 +251,7 @@
             android:background="#cfcfcf"
             android:text="-"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/main_hp_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -253,6 +259,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Hp"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->
@@ -375,7 +385,7 @@
             android:text="-"/>
 
 
-        <ImageView
+        <TextView
             android:id="@+id/main_atk_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -383,6 +393,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Atk"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->
@@ -505,7 +519,7 @@
             android:text="-"/>
 
 
-        <ImageView
+        <TextView
             android:id="@+id/main_def_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -513,6 +527,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Def"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->
@@ -635,7 +653,7 @@
             android:text="-"/>
 
 
-        <ImageView
+        <TextView
             android:id="@+id/main_spa_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -643,6 +661,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="SpDef"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->
@@ -765,7 +787,7 @@
             android:background="#cfcfcf"
             android:text="-"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/main_spd_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -773,6 +795,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="SpAtk"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->
@@ -895,7 +921,7 @@
             android:background="#cfcfcf"
             android:text="-"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/main_spe_checkbox_image"
             android:layout_width="63dp"
             android:layout_height="35dp"
@@ -903,6 +929,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Speed"
             android:background="#007f00"/>
 
         <!-- IV range and Current EVs -->

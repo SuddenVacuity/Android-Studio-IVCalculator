@@ -224,6 +224,105 @@ public class FileEditor
 
     // writes int (data) to file (directory) + (fileName)
     // returns false if failed
+    public static boolean writeFile(String directory, String fileName, byte[] data)
+    {
+        // make sure fileName starts with '/'
+        String fName = fileName;
+        if(fileName.charAt(0) != '/')
+            fName = "/" + fName;
+
+        // make sure path and directory have '/' between them
+        String fPath = path.getPath();
+        if(directory.charAt(0) != '/')
+            fPath = fPath + "/" + directory;
+        else
+            fPath = fPath + directory;
+
+        // get directory and create directory if needed
+        //File file = new File(fPath);
+        //file.mkdirs();
+
+        // get file
+        File file = new File(fPath, fName);
+
+        try {
+            if(!file.exists())
+            {
+                File pFile = new File(fPath);
+                pFile.mkdirs();
+                file.createNewFile();
+            }
+
+            // create output streams
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            // write data to file
+            bos.write(data);
+
+            // flush and close streams
+            bos.flush();
+            bos.close();
+            fos.flush();
+            fos.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("writeFile(..., int data).FileNotFoundException: " + e.getMessage());
+            createNewFile(fileName);
+            return false;
+        } catch(IOException e) {
+            System.out.println("writeFile(..., int data).General I/O exception: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    // writes int (data) to file (fileName)
+    // returns false if failed
+    public static boolean writeFile(String fileName, byte[] data)
+    {
+        // make sure fileName starts with '/'
+        String fName = fileName;
+        if(fileName.charAt(0) != '/')
+            fName = "/" + fName;
+
+        // get file
+        File file = new File(path, fName);
+
+        try {
+            // create output streams
+            if(!file.exists())
+            {
+                file.createNewFile();
+            }
+
+            FileOutputStream fos = new FileOutputStream(file, true);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            // write data to file
+            bos.write(data);
+
+            // flush and close streams
+            bos.flush();
+            bos.close();
+            fos.flush();
+            fos.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("writeFile(..., int data).FileNotFoundException: " + e.getMessage());
+            createNewFile(fileName);
+            return false;
+        } catch(IOException e) {
+            System.out.println("writeFile(..., int data).General I/O exception: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    // writes int (data) to file (directory) + (fileName)
+    // returns false if failed
     public static boolean writeFile(String directory, String fileName, int data)
     {
         // make sure fileName starts with '/'
@@ -287,6 +386,16 @@ public class FileEditor
 
         return true;
     }
+
+
+/* /////////////////////////////////////////////////////////////
+ *
+ *             READ FUNCTIONS
+ *
+ *
+ *
+ *
+ */ ////////////////////////////////////////////////////////////
 
     // UNTESTED
     // returns string from file(FileName)
@@ -457,6 +566,121 @@ public class FileEditor
 
         return output;
     }
+
+    // returns int at (position) from (fileName)
+    public static boolean readBytesFromFile(String fileName, byte[] data, int offset, int numBytes)
+    {
+        //byte bytes[] = new byte[numBytes];
+
+        // make sure fileName starts with '/'
+        String fName = fileName;
+        if(fileName.charAt(0) != '/')
+            fName = "/" + fName;
+
+        // create file
+        File file = new File(path, fName);
+
+        if(!file.exists())
+            return false;
+
+        try {
+            // create input streams
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+
+
+            // read from file
+            // bis.read(bytes, offset, sizeOfInt); // this wont work - any offset > 0 is out of bounds
+            int totalToCheck = offset + numBytes;
+            for(int i = 0; i < totalToCheck ; i++)
+            {
+                if(i < offset)
+                    bis.read();
+                else
+                {
+                    bis.read(data);
+                    break;
+                }
+            }
+
+            // copy data to output
+            //ByteBuffer bb = ByteBuffer.allocate(sizeOfInt);
+            //bb.order(ByteOrder.BIG_ENDIAN);
+            //bb.put(bytes[0]);
+            //bb.put(bytes[1]);
+            //bb.put(bytes[2]);
+            //bb.put(bytes[3]);
+            //output = bb.getInt(0);
+
+            //System.out.println("readIntFromFile().output " + output);
+
+            // close streams
+            bis.close();
+            fis.close();
+        } catch (FileNotFoundException e){
+            System.out.println("readIntFromFile().FileNotFoundException: " + e.getMessage());
+            return false;
+        } catch(IOException e) {
+            System.out.println("readIntFromFile().General I/O exception: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    // returns int at (position) from (directory) + (fileName)
+    public static byte[] readBytesFromFile(String directory, String fileName, int numBytes)
+    {
+        byte[] data = new byte[numBytes];
+
+        System.out.println("readBytesFromFile() read: " + numBytes + " bytes");
+
+        // make sure fileName starts with '/'
+        String fName = fileName;
+        if(fileName.charAt(0) != '/')
+            fName = "/" + fName;
+
+        // make sure path and directory have '/' between them
+        String fPath = path.getPath();
+        if(directory.charAt(0) != '/')
+            fPath = fPath + "/" + directory;
+        else
+            fPath = fPath + directory;
+
+        // get file
+        File file = new File(fPath, fName);
+
+        //if(!file.exists())
+        //    return null;
+
+        try {
+            // create input streams
+            FileInputStream fis = new FileInputStream(file);
+
+            fis.read(data);
+
+            fis.close();
+
+        } catch (FileNotFoundException e){
+            System.out.println("readBytesFromFile(directory, ...).FileNotFoundException: " + e.getMessage());
+            //return null;
+        } catch(IOException e) {
+            System.out.println("readBytesFromFile(directory, ...).General I/O exception: " + e.getMessage());
+            //return null;
+        }
+
+        return data;
+    }
+
+/* /////////////////////////////////////////////////////////////
+ *
+ *             OTHER FUNCTIONS
+ *
+ *
+ *
+ *
+ */ ////////////////////////////////////////////////////////////
+
 
     // UNTESTED
     // returns file name at (position) in (directory)
