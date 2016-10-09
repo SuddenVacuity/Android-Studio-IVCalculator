@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:background="#7f7f7f">
+
+    <!-- Second Row - label text -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="32dp">
+        <TextView
+            android:id="@+id/main_label_tstat_text"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="Stats"/>
+        <TextView
+            android:id="@+id/main_label_ostat_text"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="IV/EV"/>
+        <TextView
+            android:id="@+id/main_label_istat_text"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="+Stats"/>
+
+    </LinearLayout> <!-- End Second Row -->
+
+
+    <!-- Third Row - HP row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_hp_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalHp"
+            android:textColor="#000000"
+            android:text="---"/>
+
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_hp_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvHpDisplay"/>
+
+            <TextView
+                android:id="@+id/main_hp_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvHpDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_hp_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Hp"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_hp_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:onClick="onMinusStatHp"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_hp_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_hp_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusStatHp"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+    </LinearLayout> <!-- End Third Row -->
+
+    <!-- Fourth Row - ATK row-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_atk_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalAtk"
+            android:textColor="#000000"
+            android:text="---"/>
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_atk_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvAtkDisplay"/>
+            <TextView
+                android:id="@+id/main_atk_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvAtkDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_atk_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Atk"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_atk_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onMinusStatAtk"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_atk_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_atk_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:onClick="onPlusStatAtk"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+    </LinearLayout> <!-- End Fourth Row -->
+
+    <!-- Fifth Row - DEF row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_def_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalDef"
+            android:textColor="#000000"
+            android:text="---"/>
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_def_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvDefDisplay"/>
+            <TextView
+                android:id="@+id/main_def_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvDefDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_def_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Def"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_def_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onMinusStatDef"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_def_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_def_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:onClick="onPlusStatDef"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+    </LinearLayout> <!-- End Fifth Row -->
+
+    <!-- Sixth Row - SPA row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_spa_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalSpAtk"
+            android:textColor="#000000"
+            android:text="---"/>
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_spa_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvSPAtkDisplay"/>
+            <TextView
+                android:id="@+id/main_spa_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvSpAtkDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_spa_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="SpAtk"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_spa_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onMinusStatSpAtk"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_spa_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_spa_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:onClick="onPlusStatSpAtk"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+    </LinearLayout> <!-- End Sixth Row -->
+
+    <!-- Seventh Row - SPD row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_spd_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalSpDef"
+            android:textColor="#000000"
+            android:text="---"/>
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_spd_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvSpDefDisplay"/>
+            <TextView
+                android:id="@+id/main_spd_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvSpDefDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_spd_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="SpDef"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_spd_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onMinusStatSpDef"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_spd_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_spd_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:onClick="onPlusStatSpDef"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+    </LinearLayout> <!-- End Seventh Row -->
+
+    <!-- Eighth Row - SPE row  -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/main_spe_total_text"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:textSize="28sp"
+            android:focusable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:clickable="true"
+            android:onClick="onSetStatTotalSpeed"
+            android:textColor="#000000"
+            android:text="---"/>
+
+        <!-- IV range and Current EVs -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:id="@+id/main_spe_iv_range_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:text=" - "
+                android:onClick="onSetIvEvSpeedDisplay"/>
+            <TextView
+                android:id="@+id/main_spe_ev_text"
+                android:layout_width="75dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="1dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:enabled="false"
+                android:textIsSelectable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:textColor="#606060"
+                android:text="---"
+                android:onClick="onSetIvEvSpeedDisplay"/>
+
+        </LinearLayout> <!-- End IV range and Current EVs -->
+
+        <TextView
+            android:id="@+id/main_spe_checkbox_image"
+            android:layout_width="63dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Speed"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/main_spe_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:onClick="onMinusStatSpeed"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <!-- Input IV/EV text fields -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/main_spe_stat_input_text"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="1dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:enabled="true"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                android:background="#858585"
+                android:textColor="#303030"
+                android:text="+stat "/>
+
+        </LinearLayout> <!-- End Input IV/EV text fields -->
+
+        <Button
+            android:id="@+id/main_spe_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:onClick="onPlusStatSpeed"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+    </LinearLayout> <!-- End Eighth Row -->
+
+
+
+</LinearLayout>

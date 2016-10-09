@@ -59,19 +59,6 @@ public class NatureActivity extends Activity
         });
     }
 
-    public void onNatureConfirm(View view)
-    {
-        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-
-        Intent goingBack = new Intent();
-
-        goingBack.putExtra("returnNature", currentNature);
-
-        setResult(RESULT_OK, goingBack);
-
-        finish();
-    }
-
     public void onNatureCancel(View view)
     {
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);

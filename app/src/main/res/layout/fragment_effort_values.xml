@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:background="#7f7f7f">
+
+
+    <!-- First Row - Hot Bar -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/ev_go_to_stat_input"
+            android:layout_width="146dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="true"
+            android:clickable="true"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="Go To Stats"
+            android:onClick="onGoToStatInput"/>
+        <TextView
+            android:id="@+id/ev_hold_item_display"
+            android:layout_width="57dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="62dp"
+            android:layout_marginStart="62dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="Held"
+            android:onClick="onSetHeldItem"/>
+        <TextView
+            android:id="@+id/ev_pokerus_text"
+            android:layout_width="57dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="PkRus"
+            android:onClick="onTogglePokerus"/>
+
+    </LinearLayout> <!-- End First Row -->
+
+    <!-- Second Row - HP row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_hp_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot1Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_hp_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot1Object"
+            android:textStyle="bold"
+            android:text="Hp Up"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_hp_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot1Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_hp_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_hp_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="Hit Points"/>
+            <TextView
+                android:id="@+id/ev_hp_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Second Row -->
+
+    <!-- Third Row - ATK row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_atk_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot2Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_atk_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot2Object"
+            android:textStyle="bold"
+            android:text="Protein"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_atk_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot2Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_atk_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_atk_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="Attack"/>
+            <TextView
+                android:id="@+id/ev_atk_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Third Row -->
+
+    <!-- Fourth Row - DEF row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_def_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot3Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_def_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot3Object"
+            android:textStyle="bold"
+            android:text="Iron"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_def_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot3Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_def_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_def_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="Defense"/>
+            <TextView
+                android:id="@+id/ev_def_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Fourth Row -->
+
+    <!-- Fifth Row - SPATK row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_spa_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot4Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_spa_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot4Object"
+            android:textStyle="bold"
+            android:text="Hondew Berry"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_spa_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot4Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_spa_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_spa_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="Sp Attack"/>
+            <TextView
+                android:id="@+id/ev_spa_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Fifth Row -->
+
+    <!-- Sixth Row - SPDEF row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_spd_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot5Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_spd_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot5Object"
+            android:textStyle="bold"
+            android:text="Zinc"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_spd_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot5Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_spd_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_spd_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="SpDefense"/>
+            <TextView
+                android:id="@+id/ev_spd_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Sixth Row -->
+
+    <!-- Seventh Row - SPEED row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/ev_spe_object_add_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="onPlusSlot6Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/ev_spe_item_display"
+            android:layout_width="141dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:onClick="onSelectSlot6Object"
+            android:textStyle="bold"
+            android:text="Carbos"
+            android:background="#007f00"/>
+
+        <Button
+            android:id="@+id/ev_spe_object_subtract_button"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="onMinusSlot6Object"
+            android:gravity="center"
+            android:background="#cfcfcf"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/ev_spe_object_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="true"
+            android:textIsSelectable="false"
+            android:gravity="center"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="255"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/ev_spe_total_added_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="20dp"
+                android:textSize="10sp"
+                android:focusable="false"
+                android:gravity="center"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="Speed"/>
+            <TextView
+                android:id="@+id/ev_spe_total_added_display"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="57dp"
+                android:layout_height="30dp"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:paddingTop="5dp"
+                android:background="#858585"
+                android:clickable="true"
+                android:textColor="#000000"
+                android:text="+255 "/>
+        </LinearLayout>
+    </LinearLayout> <!-- End Seventh Row -->
+
+</LinearLayout>

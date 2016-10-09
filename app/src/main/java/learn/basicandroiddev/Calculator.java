@@ -20,8 +20,11 @@ public class Calculator
 
     public static final int ERROR_LIST_END = -1007;
 
-    public Calculator()
+    private int generation = 0;
+
+    public Calculator(int pokemonGeneration)
     {
+        generation = pokemonGeneration;
     }
 
     // sets (pokeObject) IVs, IVsMin and IVsMax
@@ -29,6 +32,8 @@ public class Calculator
     // retains IVsMin/IvsMax that are closer to the correct IV value
     public void calculateIvs(PokeObject pokeObject)
     {
+        System.out.println("calculator.calculateIvs() calculating ivs for " + PokeData.Name[pokeObject.species] + " Lv. " + pokeObject.level);
+
         // control pokes
         // make sure stats are not higher or lower than these
         // TODO: Calculator.calculateIvs() add control pokemon for EVs and IVs
@@ -43,7 +48,7 @@ public class Calculator
             minStats.species = pokeObject.species;
             minStats.nature = pokeObject.nature;
 
-            for(int z = 0; z < StatData.NUMBER_STATS; z++)
+            for(int z = StatData.STAT_HP; z < StatData.NUMBER_STATS; z++)
             {
                 maxStats.IVs[z] = 31;
                 maxStats.IVsMax[z] = 31;
@@ -66,8 +71,6 @@ public class Calculator
         for(int i = StatData.STAT_HP; i < StatData.NUMBER_STATS; i++)
         {
             comparePoke.EVs[i] = pokeObject.EVs[i];
-            comparePoke.IVsMax[i] = 32;
-            comparePoke.IVsMin[i] = 0;
         }
 
 
@@ -101,10 +104,10 @@ public class Calculator
 
             // limit IV
             // possible iv range can be calculated lower than 0 or higher than 31
-            if(pokeObject.IVsMax[i] > 31)
-                pokeObject.IVsMax[i] = 31;
-            else if(pokeObject.IVsMin[i] < 0)
-                pokeObject.IVsMin[i] = 0;
+            //if(pokeObject.IVsMax[i] > 31)
+            //    pokeObject.IVsMax[i] = 31;
+            //else if(pokeObject.IVsMin[i] < 0)
+            //    pokeObject.IVsMin[i] = 0;
 
             // TODO: Calculator() add error checking
             /* // check stat limits
@@ -113,6 +116,9 @@ public class Calculator
             else if(pokeObject.stats[i] < minStats.stats[i])
                 pokeObject.stats[i] = ERROR_STAT_TOOLOW;
              */
+
+            System.out.println("calculator.calculateIvs(pokeObject) IVs[" + i + "] = " + pokeObject.IVs[i] +
+                    " && IVsMin[" + i + "] = " + pokeObject.IVsMin[i] + " && stats[" + i + "] = " + pokeObject.stats[i]) ;
 
             // check if max is closer to true iv than last result
             if (pokeObject.IVsMax[i] > comparePoke.IVsMax[i])
@@ -125,6 +131,7 @@ public class Calculator
             // set IVs if min and max are equal
             if (pokeObject.IVsMin[i] == pokeObject.IVsMax[i])
                 pokeObject.IVs[i] = pokeObject.IVsMin[i];
+
         } // end check stats
 
         // Shedenja check
@@ -141,9 +148,20 @@ public class Calculator
         double result;
 
         final int lv = pokeObject.level;
-        final int baseStat = PokeData.baseStats[pokeObject.species][statEnum];
         final int EV = pokeObject.EVs[statEnum];
         final int IV = pokeObject.IVs[statEnum];
+
+        int baseStat = PokeData.baseStats[pokeObject.species][statEnum];
+
+        // use correct base stats if pre gen6
+        if(generation < 6)
+        {
+            for(int i = 0; i < PokeData.NUMBER_PRE_GENVI_STAT_CHANGES; i++)
+            {
+                if(pokeObject.species == PokeData.baseStatsPreGenVI[i][6])
+                    baseStat = PokeData.baseStatsPreGenVI[i][statEnum];
+            }
+        }
 
         // HP
         if(statEnum == StatData.STAT_HP)

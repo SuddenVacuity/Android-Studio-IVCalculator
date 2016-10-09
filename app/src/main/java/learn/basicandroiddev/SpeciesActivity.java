@@ -66,7 +66,7 @@ public class SpeciesActivity extends Activity
                                                  TextView result5 = (TextView) findViewById(R.id.species_result5);
                                                  TextView result6 = (TextView) findViewById(R.id.species_result6);
                                                  TextView result7 = (TextView) findViewById(R.id.species_result7);
-                                                 TextView result8 = (TextView) findViewById(R.id.species_result7);
+                                                 TextView result8 = (TextView) findViewById(R.id.species_result8);
 
                                                  result1.setText("");
                                                  result2.setText("");

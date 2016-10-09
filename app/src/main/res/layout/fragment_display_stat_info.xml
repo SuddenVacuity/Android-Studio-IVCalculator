@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#7f7f7f">
+
+    <!-- First Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp">
+
+        <!-- Pokemon Info -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="203dp"
+            android:layout_height="fill_parent">
+
+            <!-- Level and Config -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="2dp">
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_hp_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:background="#858585"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:onClick="onSetHp"
+                    android:text="HP"
+                    android:clickable="true"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_hp_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:onClick="onSetHp"
+                    android:text="---"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_atk_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:background="#858585"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:onClick="onSetAtk"
+                    android:text="Atk"
+                    android:clickable="true"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_atk_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:onClick="onSetAtk"
+                    android:text="---"/>
+            </LinearLayout> <!-- End Level and Config -->
+
+            <!-- Level and Config -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_def_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:background="#858585"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:onClick="onSetDef"
+                    android:text="Def"
+                    android:clickable="true"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_def_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:onClick="onSetDef"
+                    android:text="---"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spa_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:onClick="onSetSpAtk"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="Sp.Atk"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spa_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:onClick="onSetSpAtk"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="---"/>
+            </LinearLayout> <!-- End Level and Config -->
+
+
+            <!-- Level and Config -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spd_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:onClick="onSetSpDef"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="Sp.Def"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spd_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:onClick="onSetSpDef"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="---"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spe_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:onClick="onSetSpeed"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="Speed"/>
+                <TextView
+                    android:id="@+id/fragment_display_poke_info_spe_number"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="45dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:onClick="onSetSpeed"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:clickable="true"
+                    android:text="---"/>
+            </LinearLayout>
+
+
+        </LinearLayout> <!-- End Pokemon Info -->
+    </LinearLayout> <!-- End First -->
+
+
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:background="#7f7f7f">
+
+    <!-- Second Row - label text -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_height="32dp">
+        <TextView
+            android:id="@+id/main_label_istat_text"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="+Stats"/>
+        <TextView
+            android:id="@+id/main_label_ostat_text"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="IV/EV"/>
+        <TextView
+            android:id="@+id/main_label_tstat_text"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:focusable="false"
+            android:enabled="false"
+            android:textIsSelectable="false"
+            android:background="#858585"
+            android:textColor="#000000"
+            android:text="Stats"/>
+
+    </LinearLayout> <!-- End Second Row -->
+
+    <!-- row 3 - content scrollview -->
+    <LinearLayout
+        android:layout_width="270dp"
+        android:layout_height="340dp"
+        android:background="#00005f"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/scrollView">
+
+        <!-- content layout -->
+        <ListView
+            android:layout_width="250dp"
+            android:layout_height="320dp"
+            android:id="@+id/nature_listview"
+            android:background="#858585"/>
+
+    </LinearLayout> <!--  end row 3 - end content scrollview -->
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="#5f5f5f"
+        android:onClick="onNatureConfirm"
+        android:text="Confirm"/>
+
+</LinearLayout>

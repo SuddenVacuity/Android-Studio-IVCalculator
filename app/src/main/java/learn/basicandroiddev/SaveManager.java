@@ -8,55 +8,59 @@ import java.nio.ByteOrder;
  */
 public class SaveManager
 {
-    private final int saveLength = 16384;
+    private final int saveLength = 32768;
     private byte[] saveData = new byte[saveLength];
+    private static int intLength = 4;
+    // header values are: version number, number of entries, ADDED_EVS[6], evHistory[1024]
+    private static int headerLength = 1032;
+    private static int entryLength = 36;
+    private static int MAX_ENTRIES = 210;
 
     private static int entryId = 0;
     private static int numEntries = 0;
-    private static int currentVersion = 0;
+    private static int currentVersion = 0; // set in main activity onCreate()
     private static int saveVersion = 0;
-
-    private static int intLength = 4;
-    private static int headerLength = 2;
-    private static int entryLength = 33;
 
     private static int entryLengthBytes = entryLength * intLength;
     private static int headerLengthBytes = headerLength * intLength;
 
     // entry layout enum
-    public static final int SAVE_LEVEL = 0;
-    public static final int SAVE_SPECIES = SAVE_LEVEL + 1;
-    public static final int SAVE_NATURE = SAVE_SPECIES + 1;
-    public static final int SAVE_STAT_HP = SAVE_NATURE + 1;
-    public static final int SAVE_STAT_ATK = SAVE_STAT_HP + 1;
-    public static final int SAVE_STAT_DEF = SAVE_STAT_ATK + 1;
-    public static final int SAVE_STAT_SPATK = SAVE_STAT_DEF + 1;
-    public static final int SAVE_STAT_SPDEF = SAVE_STAT_SPATK + 1;
-    public static final int SAVE_STAT_SPEED = SAVE_STAT_SPDEF + 1;
-    public static final int SAVE_EV_HP = SAVE_STAT_SPEED + 1;
-    public static final int SAVE_EV_ATK = SAVE_EV_HP + 1;
-    public static final int SAVE_EV_DEF = SAVE_EV_ATK + 1;
-    public static final int SAVE_EV_SPATK = SAVE_EV_DEF + 1;
-    public static final int SAVE_EV_SPDEF = SAVE_EV_SPATK + 1;
-    public static final int SAVE_EV_SPEED = SAVE_EV_SPDEF + 1;
-    public static final int SAVE_IV_HP = SAVE_EV_SPEED + 1;
-    public static final int SAVE_IV_ATK = SAVE_IV_HP + 1;
-    public static final int SAVE_IV_DEF = SAVE_IV_ATK + 1;
-    public static final int SAVE_IV_SPATK = SAVE_IV_DEF + 1;
-    public static final int SAVE_IV_SPDEF = SAVE_IV_SPATK + 1;
-    public static final int SAVE_IV_SPEED = SAVE_IV_SPDEF + 1;
-    public static final int SAVE_IVMIN_HP = SAVE_IV_SPEED + 1;
-    public static final int SAVE_IVMIN_ATK = SAVE_IVMIN_HP + 1;
-    public static final int SAVE_IVMIN_DEF = SAVE_IVMIN_ATK + 1;
-    public static final int SAVE_IVMIN_SPATK = SAVE_IVMIN_DEF + 1;
-    public static final int SAVE_IVMIN_SPDEF = SAVE_IVMIN_SPATK + 1;
-    public static final int SAVE_IVMIN_SPEED = SAVE_IVMIN_SPDEF + 1;
-    public static final int SAVE_IVMAX_HP = SAVE_IVMIN_SPEED + 1;
-    public static final int SAVE_IVMAX_ATK = SAVE_IVMAX_HP + 1;
-    public static final int SAVE_IVMAX_DEF = SAVE_IVMAX_ATK + 1;
-    public static final int SAVE_IVMAX_SPATK = SAVE_IVMAX_DEF + 1;
-    public static final int SAVE_IVMAX_SPDEF = SAVE_IVMAX_SPATK + 1;
-    public static final int SAVE_IVMAX_SPEED = SAVE_IVMAX_SPDEF + 1;
+    public static final int SAVE_EV_HISTORY_COUNT = 0;
+    public static final int SAVE_LEVEL       = 1;
+    public static final int SAVE_SPECIES     = 2;
+    public static final int SAVE_NATURE      = 3;
+    public static final int SAVE_HOLD_ITEM   = 4;
+    public static final int SAVE_HAS_POKERUS = 5;
+    public static final int SAVE_STAT_HP     = 6;
+    public static final int SAVE_STAT_ATK    = 7;
+    public static final int SAVE_STAT_DEF    = 8;
+    public static final int SAVE_STAT_SPEED  = 9;
+    public static final int SAVE_STAT_SPATK  = 10;
+    public static final int SAVE_STAT_SPDEF  = 11;
+    public static final int SAVE_EV_HP       = 12;
+    public static final int SAVE_EV_ATK      = 13;
+    public static final int SAVE_EV_DEF      = 14;
+    public static final int SAVE_EV_SPEED    = 15;
+    public static final int SAVE_EV_SPATK    = 16;
+    public static final int SAVE_EV_SPDEF    = 17;
+    public static final int SAVE_IV_HP       = 18;
+    public static final int SAVE_IV_ATK      = 19;
+    public static final int SAVE_IV_DEF      = 20;
+    public static final int SAVE_IV_SPEED    = 21;
+    public static final int SAVE_IV_SPATK    = 22;
+    public static final int SAVE_IV_SPDEF    = 23;
+    public static final int SAVE_IVMIN_HP    = 24;
+    public static final int SAVE_IVMIN_ATK   = 25;
+    public static final int SAVE_IVMIN_DEF   = 26;
+    public static final int SAVE_IVMIN_SPEED = 27;
+    public static final int SAVE_IVMIN_SPATK = 28;
+    public static final int SAVE_IVMIN_SPDEF = 29;
+    public static final int SAVE_IVMAX_HP    = 30;
+    public static final int SAVE_IVMAX_ATK   = 31;
+    public static final int SAVE_IVMAX_DEF   = 32;
+    public static final int SAVE_IVMAX_SPEED = 33;
+    public static final int SAVE_IVMAX_SPATK = 34;
+    public static final int SAVE_IVMAX_SPDEF = 35;
 
     public int getNumEntries()
     {
@@ -108,73 +112,102 @@ public class SaveManager
 
     }
 
-    public void autoSaveFile(PokeObject pokeObject)
+    public void autoSaveFile(PokeObject pokeObject, int[] ADDED_EVS_6, int[] evHistoryData_1024)
     {
         // entry# >> level >> species >> nature >> stats >> evs >> ivs >> ivsmin >> ivsmax
         int[] data = new int[entryLength];
 
         int i = 0;
 
+        data[i++] = pokeObject.evHistoryCount;
         data[i++] = pokeObject.level;
         data[i++] = pokeObject.species;
         data[i++] = pokeObject.nature;
+        data[i++] = pokeObject.heldItem;
+        data[i++] = pokeObject.pokerus;
 
-        data[i++] = pokeObject.stats[0];
-        data[i++] = pokeObject.stats[1];
-        data[i++] = pokeObject.stats[2];
-        data[i++] = pokeObject.stats[3];
-        data[i++] = pokeObject.stats[4];
-        data[i++] = pokeObject.stats[5];
+        // TODO: saveManager.autoSaveFile() switch to this for release
+        //for( int statEnum = StatData.STAT_HP; statEnum < StatData.NUMBER_STATS; statEnum++)
+        //{
+        //    data[i++] = pokeObject.stats[statEnum];
+        //    data[i++] = pokeObject.EVs[statEnum];
+        //    data[i++] = pokeObject.IVs[statEnum];
+        //    data[i++] = pokeObject.IVsMin[statEnum];
+        //    data[i++] = pokeObject.IVsMax[statEnum];
+        //}
 
-        data[i++] = pokeObject.EVs[0];
-        data[i++] = pokeObject.EVs[1];
-        data[i++] = pokeObject.EVs[2];
-        data[i++] = pokeObject.EVs[3];
-        data[i++] = pokeObject.EVs[4];
-        data[i++] = pokeObject.EVs[5];
+        data[i++] = pokeObject.stats[StatData.STAT_HP];
+        data[i++] = pokeObject.stats[StatData.STAT_ATK];
+        data[i++] = pokeObject.stats[StatData.STAT_DEF];
+        data[i++] = pokeObject.stats[StatData.STAT_SPATK];
+        data[i++] = pokeObject.stats[StatData.STAT_SPDEF];
+        data[i++] = pokeObject.stats[StatData.STAT_SPEED];
 
-        data[i++] = pokeObject.IVs[0];
-        data[i++] = pokeObject.IVs[1];
-        data[i++] = pokeObject.IVs[2];
-        data[i++] = pokeObject.IVs[3];
-        data[i++] = pokeObject.IVs[4];
-        data[i++] = pokeObject.IVs[5];
+        data[i++] = pokeObject.EVs[StatData.STAT_HP];
+        data[i++] = pokeObject.EVs[StatData.STAT_ATK];
+        data[i++] = pokeObject.EVs[StatData.STAT_DEF];
+        data[i++] = pokeObject.EVs[StatData.STAT_SPATK];
+        data[i++] = pokeObject.EVs[StatData.STAT_SPDEF];
+        data[i++] = pokeObject.EVs[StatData.STAT_SPEED];
 
-        data[i++] = pokeObject.IVsMin[0];
-        data[i++] = pokeObject.IVsMin[1];
-        data[i++] = pokeObject.IVsMin[2];
-        data[i++] = pokeObject.IVsMin[3];
-        data[i++] = pokeObject.IVsMin[4];
-        data[i++] = pokeObject.IVsMin[5];
+        data[i++] = pokeObject.IVs[StatData.STAT_HP];
+        data[i++] = pokeObject.IVs[StatData.STAT_ATK];
+        data[i++] = pokeObject.IVs[StatData.STAT_DEF];
+        data[i++] = pokeObject.IVs[StatData.STAT_SPATK];
+        data[i++] = pokeObject.IVs[StatData.STAT_SPDEF];
+        data[i++] = pokeObject.IVs[StatData.STAT_SPEED];
 
-        data[i++] = pokeObject.IVsMax[0];
-        data[i++] = pokeObject.IVsMax[1];
-        data[i++] = pokeObject.IVsMax[2];
-        data[i++] = pokeObject.IVsMax[3];
-        data[i++] = pokeObject.IVsMax[4];
-        data[i++] = pokeObject.IVsMax[5];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_HP];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_ATK];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_DEF];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_SPATK];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_SPDEF];
+        data[i++] = pokeObject.IVsMin[StatData.STAT_SPEED];
+
+        data[i++] = pokeObject.IVsMax[StatData.STAT_HP];
+        data[i++] = pokeObject.IVsMax[StatData.STAT_ATK];
+        data[i++] = pokeObject.IVsMax[StatData.STAT_DEF];
+        data[i++] = pokeObject.IVsMax[StatData.STAT_SPATK];
+        data[i++] = pokeObject.IVsMax[StatData.STAT_SPDEF];
+        data[i++] = pokeObject.IVsMax[StatData.STAT_SPEED];
 
         entryId++;
         numEntries = entryId;
 
-
+        int b = 0;
         // add version info and numEntries
-        for(int j = 0; j < entryLength; j++)
-        {
-            // version info
-            saveData[0] = (byte) (currentVersion >> 24);
-            saveData[1] = (byte) (currentVersion >> 16);
-            saveData[2] = (byte) (currentVersion >> 8);
-            saveData[3] = (byte) (currentVersion);
+        // version info
+        saveData[b++] = (byte) (currentVersion >> 24);
+        saveData[b++] = (byte) (currentVersion >> 16);
+        saveData[b++] = (byte) (currentVersion >> 8);
+        saveData[b++] = (byte) (currentVersion);
 
-            // numEntries
-            saveData[4] = (byte) (numEntries >> 24);
-            saveData[5] = (byte) (numEntries >> 16);
-            saveData[6] = (byte) (numEntries >> 8);
-            saveData[7] = (byte) (numEntries);
+        // numEntries
+        saveData[b++] = (byte) (numEntries >> 24);
+        saveData[b++] = (byte) (numEntries >> 16);
+        saveData[b++] = (byte) (numEntries >> 8);
+        saveData[b++] = (byte) (numEntries);
+
+        // add ADDED_EVS[6]
+        for(int j = 0; j < 6; j++)
+        {
+            saveData[b++] = (byte) (ADDED_EVS_6[j] >> 24);
+            saveData[b++] = (byte) (ADDED_EVS_6[j] >> 16);
+            saveData[b++] = (byte) (ADDED_EVS_6[j] >> 8);
+            saveData[b++] = (byte) (ADDED_EVS_6[j]);
         }
 
-        // get offset
+        // add evHistoryData[6]
+        for(int j = 0; j < MainActivity.evHistoryLength; j++)
+        {
+            saveData[b++] = (byte) (evHistoryData_1024[j] >> 24);
+            saveData[b++] = (byte) (evHistoryData_1024[j] >> 16);
+            saveData[b++] = (byte) (evHistoryData_1024[j] >> 8);
+            saveData[b++] = (byte) (evHistoryData_1024[j]);
+        }
+
+
+        // get offset to start pokeObject entries
         int offset = headerLengthBytes + entryId * entryLengthBytes;
 
         // add pokedata
@@ -255,48 +288,61 @@ public class SaveManager
             bb.put(bytes[2 + i * intLength]);
             bb.put(bytes[3 + i * intLength]);
             data[i] = bb.getInt(0);
-            //System.out.println("loadPokeDataFromMemory() data[" + i + "] = " + data[i]);
+            System.out.println("loadPokeDataFromMemory() data[" + i + "] = " + data[i]);
         }
 
         int k = 0;
+        pokeObject.evHistoryCount = data[k++];
         pokeObject.level = data[k++];
         pokeObject.species = data[k++];
         pokeObject.nature = data[k++];
+        pokeObject.heldItem = data[k++];
+        pokeObject.pokerus = data[k++];
 
-        pokeObject.stats[0] = data[k++];
-        pokeObject.stats[1] = data[k++];
-        pokeObject.stats[2] = data[k++];
-        pokeObject.stats[3] = data[k++];
-        pokeObject.stats[4] = data[k++];
-        pokeObject.stats[5] = data[k++];
+        //// TODO: saveManager.autoSaveFile() switch to this for release
+        //for( int statEnum = StatData.STAT_HP; statEnum < StatData.NUMBER_STATS; statEnum++)
+        //{
+        //    pokeObject.stats[statEnum] = data[k++];
+        //    pokeObject.EVs[statEnum] = data[k++];
+        //    pokeObject.IVs[statEnum] = data[k++];
+        //    pokeObject.IVsMin[statEnum] = data[k++];
+        //    pokeObject.IVsMax[statEnum] = data[k++];
+        //}
 
-        pokeObject.EVs[0] = data[k++];
-        pokeObject.EVs[1] = data[k++];
-        pokeObject.EVs[2] = data[k++];
-        pokeObject.EVs[3] = data[k++];
-        pokeObject.EVs[4] = data[k++];
-        pokeObject.EVs[5] = data[k++];
+        pokeObject.stats[StatData.STAT_HP] = data[k++];
+        pokeObject.stats[StatData.STAT_ATK] = data[k++];
+        pokeObject.stats[StatData.STAT_DEF] = data[k++];
+        pokeObject.stats[StatData.STAT_SPATK] = data[k++];
+        pokeObject.stats[StatData.STAT_SPDEF] = data[k++];
+        pokeObject.stats[StatData.STAT_SPEED] = data[k++];
 
-        pokeObject.IVs[0] = data[k++];
-        pokeObject.IVs[1] = data[k++];
-        pokeObject.IVs[2] = data[k++];
-        pokeObject.IVs[3] = data[k++];
-        pokeObject.IVs[4] = data[k++];
-        pokeObject.IVs[5] = data[k++];
+        pokeObject.EVs[StatData.STAT_HP] = data[k++];
+        pokeObject.EVs[StatData.STAT_ATK] = data[k++];
+        pokeObject.EVs[StatData.STAT_DEF] = data[k++];
+        pokeObject.EVs[StatData.STAT_SPATK] = data[k++];
+        pokeObject.EVs[StatData.STAT_SPDEF] = data[k++];
+        pokeObject.EVs[StatData.STAT_SPEED] = data[k++];
 
-        pokeObject.IVsMin[0] = data[k++];
-        pokeObject.IVsMin[1] = data[k++];
-        pokeObject.IVsMin[2] = data[k++];
-        pokeObject.IVsMin[3] = data[k++];
-        pokeObject.IVsMin[4] = data[k++];
-        pokeObject.IVsMin[5] = data[k++];
+        pokeObject.IVs[StatData.STAT_HP] = data[k++];
+        pokeObject.IVs[StatData.STAT_ATK] = data[k++];
+        pokeObject.IVs[StatData.STAT_DEF] = data[k++];
+        pokeObject.IVs[StatData.STAT_SPATK] = data[k++];
+        pokeObject.IVs[StatData.STAT_SPDEF] = data[k++];
+        pokeObject.IVs[StatData.STAT_SPEED] = data[k++];
 
-        pokeObject.IVsMax[0] = data[k++];
-        pokeObject.IVsMax[1] = data[k++];
-        pokeObject.IVsMax[2] = data[k++];
-        pokeObject.IVsMax[3] = data[k++];
-        pokeObject.IVsMax[4] = data[k++];
-        pokeObject.IVsMax[5] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_HP] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_ATK] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_DEF] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_SPATK] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_SPDEF] = data[k++];
+        pokeObject.IVsMin[StatData.STAT_SPEED] = data[k++];
+
+        pokeObject.IVsMax[StatData.STAT_HP] = data[k++];
+        pokeObject.IVsMax[StatData.STAT_ATK] = data[k++];
+        pokeObject.IVsMax[StatData.STAT_DEF] = data[k++];
+        pokeObject.IVsMax[StatData.STAT_SPATK] = data[k++];
+        pokeObject.IVsMax[StatData.STAT_SPDEF] = data[k++];
+        pokeObject.IVsMax[StatData.STAT_SPEED] = data[k++];
 
         entryId = position;
 

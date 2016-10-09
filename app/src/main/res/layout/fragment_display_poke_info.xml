@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#7f7f7f">
+
+
+    <!-- First Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp">
+
+        <!-- Pokemon Info -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="203dp"
+            android:layout_height="fill_parent">
+
+            <!-- Level and Config -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
+                <TextView
+                    android:id="@+id/main_level_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="30dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:background="#858585"
+                    android:textSize="18sp"
+                    android:textColor="#000000"
+                    android:onClick="onSetLevel"
+                    android:text="Lv."
+                    android:clickable="true"/>
+                <TextView
+                    android:id="@+id/main_level_input_text"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#858585"
+                    android:textColor="#000000"
+                    android:onClick="onSetLevel"
+                    android:text="---"/>
+                <TextView
+                    android:id="@+id/main_undo_button_image"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="40dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:onClick="onUndo"
+                    android:background="#007f00"
+                    android:clickable="true"
+                    android:text="&lt;--"/>
+                <TextView
+                    android:id="@+id/main_redo_button_image"
+                    android:hapticFeedbackEnabled="true"
+                    android:layout_width="40dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:onClick="onRedo"
+                    android:background="#007f00"
+                    android:clickable="true"
+                    android:text="--&gt;"/>
+            </LinearLayout> <!-- End Level and Config -->
+
+            <TextView
+                android:id="@+id/main_species_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="start|center"
+                android:textSize="20sp"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="true"
+                android:onClick="onSetSpecies"
+                android:text="Select Species"/>
+
+            <TextView
+                android:id="@+id/main_nature_text"
+                android:hapticFeedbackEnabled="true"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="start|center"
+                android:textSize="20sp"
+                android:background="#858585"
+                android:textColor="#000000"
+                android:enabled="true"
+                android:clickable="true"
+                android:onClick="onSetNature"
+                android:text="Select Nature"/>
+        </LinearLayout> <!-- End Pokemon Info -->
+    </LinearLayout> <!-- End First -->
+
+
+</LinearLayout>

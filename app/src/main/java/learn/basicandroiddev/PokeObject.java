@@ -5,10 +5,12 @@ package learn.basicandroiddev;
  */
 public class PokeObject
 {
+    public int evHistoryCount = 0;
     public int level = 0;
-    public int species = 0;
+    public int species = PokeData.SPECIES_NONE;
     public int nature = StatData.NATURE_NONE;
-    public int code = 0;
+    public int heldItem = 0;
+    public int pokerus = 0;
     public int[] IVs = {-3,-3,-3,-3,-3,-3};
     public int[] IVsMin = {-2,-2,-2,-2,-2,-2};
     public int[] IVsMax = {32,32,32,32,32,32};
@@ -17,17 +19,19 @@ public class PokeObject
 
     public PokeObject()
     {
+        evHistoryCount = 0;
         level = 0;
         species = PokeData.SPECIES_NONE;
         nature = StatData.NATURE_NONE;
-        code = 0;
+        heldItem = 0;
+        pokerus = 0;
         for(int i = 0; i < StatData.NUMBER_STATS; i++)
         {
             IVs[i] = -3;
             IVsMin[i] = -2;
             IVsMax[i] = 32;
-            EVs[i] = 0;
-            stats[i] = 0;
+            EVs[i] = -1;
+            stats[i] = -1;
         }
     }
 }

@@ -16,7 +16,7 @@ public class NumberActivity extends Activity
     public int maxValue = 0;
     public boolean allowNegative = true;
     public String numberPurpose= "dummy text";
-
+/*
     // set output value to previous value
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -236,4 +236,6 @@ public class NumberActivity extends Activity
         view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         addNumber("0");
     }
+
+    */
 }
